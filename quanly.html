@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Them san pham:</h3><br><br>
+<input type="text" id="them"><span><input type="button" value="ADD" onclick="Nhap()"></span><br><br>
+<h3>Hien thi Danh sach cac san pham</h3>
+<table>
+    <td>
+        <p>Danh sach cac san pham</p>
+    </td>
+    <td>
+        <p id="danhsach"></p>
+    </td>
+</table><br><br>
+<p id="hienthisanpham"></p><div id="spoiler" >
+    <h3>xoa san pham</h3>
+    <div class="container">
+        <form action="javascript:void(0);" method="POST" id="saveEdit">
+            <input type="text" id="editname">
+            <input type="submit" value="Edit" />
+        </form>
+    </div>
+</div>
+<script>
+    let danhsach=["tivi","tu lanh","dieu hoa", "may giat", "noi com","quat dien","may say"];
+    function khoitao() {
+        let e="<table>";
+        for (let i = 0; i < danhsach.length; i++) {
+            let button =
+                "<input type='button' id=" + i + " value='edit' onclick='Suaten(this.id)'/>"
+                +
+                "<input type='button' id=" + i + " value='delete' onclick='xoasanpham(this.id)'/>";
+            e += "<tr>";
+            e += "<td>" + danhsach[i] + "</td>" + "<td>" + button + "</td>";
+            document.getElementById("hienthisanpham").innerHTML = e;
+        }
+        document.getElementById("danhsach").innerHTML = " " + "so luong :" + danhsach.length + " " + "san pham";
+    }
+    khoitao();
+    function Nhap(sanpham) {
+        sanpham=document.getElementById("them").value;
+        danhsach.push(sanpham);
+        khoitao();
+    }
+    function Suaten(number) {
+        let edit = document.getElementById('editname');
+        edit.value = danhsach[number];
+        document.getElementById('saveEdit').onsubmit = function() {
+            let product = edit.value;
+            danhsach.splice(number, 1, product.trim());
+            khoitao();
+        }
+    }
+    function xoasanpham(number) {
+        danhsach.splice(number,1);
+        khoitao();
+    }
+</script>
+</body>
+</html>
